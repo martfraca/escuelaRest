@@ -37,6 +37,7 @@ $routes->group('api',['namespace'=> 'App\Controllers\API'], function($routes){
 	$routes->get('estudiantes', 'Estudiantes::index');
 	$routes->post('estudiantes/create','Estudiantes::create');
 	$routes->get('estudiantes/edit/(:num)','Estudiantes::edit/$1');
+	$routes->put('estudiantes/update/(:num)','Estudiantes::update/$1');
 
 	
 });

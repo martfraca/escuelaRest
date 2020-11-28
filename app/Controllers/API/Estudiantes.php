@@ -30,6 +30,7 @@ class Estudiantes extends ResourceController
         }
     }
     public function edit($id = null)
+    {
         try {
             if($id == null)
                return $this->failValidationError('No se ha pasado un ID Valido');
@@ -37,6 +38,27 @@ class Estudiantes extends ResourceController
             if($estudiante == null)
                 return $this->failNotFound('No se ha encontrado un cliente con el id: '.$id);
             return $this->respond($estudiante);
+        } catch (\Exception $e) {
+            return $this->failServerError('Ha ocurrido un error en el servidor');
+        }
+    }
+    public function update($id = null)
+    {
+        try {
+            if($id == null)
+               return $this->failValidationError('No se ha pasado un ID Valido');
+            $estudianteVerificado = $this->model->find($id);
+            if($estudianteVerificado == null)
+                return $this->failNotFound('No se ha encontrado un cliente con el id: '.$id);
+            $estudiante = $this->request->getJSON();
+
+            if($this->model->update($id, $estudiante)):
+                //$estudiante->id = $this->model->insertID();           
+                return $this->respondUpdate($estudiante);
+               else:
+                   return $this->failValidationError($this->model->validation->listErrors());
+               endif;
+            //return $this->respond($estudiante);
         } catch (\Exception $e) {
             return $this->failServerError('Ha ocurrido un error en el servidor');
         }
