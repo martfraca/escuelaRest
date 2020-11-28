@@ -53,8 +53,31 @@ class Estudiantes extends ResourceController
             $estudiante = $this->request->getJSON();
 
             if($this->model->update($id, $estudiante)):
+                $estudiante->id = $id;
                 //$estudiante->id = $this->model->insertID();           
                 return $this->respondUpdate($estudiante);
+               else:
+                   return $this->failValidationError($this->model->validation->listErrors());
+               endif;
+            //return $this->respond($estudiante);
+        } catch (\Exception $e) {
+            return $this->failServerError('Ha ocurrido un error en el servidor');
+        }
+    }
+    public function delete($id = null)
+    {
+        try {
+            if($id == null)
+               return $this->failValidationError('No se ha pasado un ID Valido');
+            $estudianteVerificado = $this->model->find($id);
+            if($estudianteVerificado == null)
+                return $this->failNotFound('No se ha encontrado un cliente con el id: '.$id);
+           // $estudiante = $this->request->getJSON();
+
+            if($this->model->delete($id)):
+                //$estudiante->id = $id;
+                //$estudiante->id = $this->model->insertID();           
+                return $this->respondDeleted($estudianteVerificado);
                else:
                    return $this->failValidationError($this->model->validation->listErrors());
                endif;
