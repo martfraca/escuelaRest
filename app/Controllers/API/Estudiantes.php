@@ -79,7 +79,7 @@ class Estudiantes extends ResourceController
                 //$estudiante->id = $this->model->insertID();           
                 return $this->respondDeleted($estudianteVerificado);
                else:
-                   return $this->failValidationError($this->model->validation->listErrors());
+                return $this->failServerError('no se ha podido eliminar el Registro');
                endif;
             //return $this->respond($estudiante);
         } catch (\Exception $e) {
