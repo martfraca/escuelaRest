@@ -37,8 +37,8 @@ class Estudiantes extends ResourceController
             $estudiante = $this->model->find($id);
             if($estudiante == null)
                 return $this->failNotFound('No se ha encontrado un cliente con el id: '.$id);
-            $gradoModel = new gradoModel();
-            $estudiante["grado"]=$gradoModel->where('estudiante_id',$estudiante['id'])->findAll();
+            //$gradoModel = new gradoModel();
+            //$estudiante["grado"]=$gradoModel->where('estudiante_id',$estudiante['id'])->findAll();
             return $this->respond($estudiante);
         } catch (\Exception $e) {
             return $this->failServerError('Ha ocurrido un error en el servidor');
